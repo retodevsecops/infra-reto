@@ -1,0 +1,83 @@
+name: 'AKS Deployment'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  storageAndContainer:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Checkout
+      uses: actions/checkout@v1
+    
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+          az storage -h
+    
+    - name: Azure CLI script file
+      uses: azure/cli@v2
+      env:
+        STORAGEACCOUNTNAME: ${{ env.STORAGEACCOUNTNAME }}
+        RESOURCEGROUP: ${{ env.RESOURCEGROUP }}
+        STORAGECONTAINERNAMEACR: ${{ env.STORAGECONTAINERNAMEACR }}
+        STORAGECONTAINERNAMEAKS: ${{ env.STORAGECONTAINERNAMEAKS }}
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          chmod +x az/az-storages.sh
+          az/az-storages.sh
+  # aks:
+  #   name: 'Terraform'
+  #   env:
+  #     ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  #     ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #     ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+  #     ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  #     RESOURCE_GROUP_NAME: ${{ env.RESOURCE_GROUP_NAME }}
+  #     LOCATION: ${{ env.LOCATION }}
+  #     CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  #     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  #     AGENT_COUNT: ${{ env.AZURE_AGENT_COUNT }}
+  #     DNS_PREFIX: ${{ env.DNS_PREFIX }}
+  #     CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+  #   runs-on: ubuntu-latest
+  #   environment: production
+
+  #   defaults:
+  #     run:
+  #       shell: bash
+
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+
+  #   - name: Setup Terraform
+  #     uses: hashicorp/setup-terraform@v1
+
+  #   - name: Terraform Init
+  #     working-directory: terraform/aks
+  #     run: terraform init
+           
+  #   - name: Terraform Format
+  #     working-directory: terraform/aks
+  #     run: terraform fmt
+
+  #   - name: Terraform Plan
+  #     working-directory: terraform/aks
+  #     run: terraform plan
+    
+  #   - name: Terraform Apply
+  #     working-directory: terraform/aks
+  #     run: terraform apply -auto-approve

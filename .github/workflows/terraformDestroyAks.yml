@@ -1,0 +1,44 @@
+name: 'AKS Destroy'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      RESOURCE_GROUP_NAME: ${{ env.RESOURCE_GROUP_NAME }}
+      LOCATION: ${{ env.LOCATION }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      AGENT_COUNT: ${{ env.AZURE_AGENT_COUNT }}
+      DNS_PREFIX: ${{ env.DNS_PREFIX }}
+      CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      working-directory: terraform/aks
+      run: terraform init
+    
+    - name: Terraform Destroy
+      working-directory: terraform/aks
+      run: terraform destroy -auto-approve
