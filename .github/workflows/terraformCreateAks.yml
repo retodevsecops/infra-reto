@@ -3,17 +3,18 @@ name: 'AKS Deployment'
 on:
   workflow_dispatch:
 
+env:
+  STORAGEACCOUNTNAME: ${{ vars.STORAGEACCOUNTNAME }}
+  RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
+  STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
+  STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
+
 permissions:
   contents: read
 
 jobs:
   storageAndContainer:
     runs-on: ubuntu-latest
-    env:
-      STORAGEACCOUNTNAME: ${{ vars.STORAGEACCOUNTNAME }}
-      RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
-      STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
-      STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
     steps:
     - name: Azure Login
       uses: azure/login@v2
