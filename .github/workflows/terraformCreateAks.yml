@@ -9,6 +9,11 @@ permissions:
 jobs:
   storageAndContainer:
     runs-on: ubuntu-latest
+    env:
+      STORAGEACCOUNTNAME: ${{ env.STORAGEACCOUNTNAME }}
+      RESOURCEGROUP: ${{ env.RESOURCEGROUP }}
+      STORAGECONTAINERNAMEACR: ${{ env.STORAGECONTAINERNAMEACR }}
+      STORAGECONTAINERNAMEAKS: ${{ env.STORAGECONTAINERNAMEAKS }}
     steps:
     - name: Azure Login
       uses: azure/login@v2
@@ -28,11 +33,6 @@ jobs:
     
     - name: Azure CLI script file
       uses: azure/cli@v2
-      env:
-        STORAGEACCOUNTNAME: ${{ env.STORAGEACCOUNTNAME }}
-        RESOURCEGROUP: ${{ env.RESOURCEGROUP }}
-        STORAGECONTAINERNAMEACR: ${{ env.STORAGECONTAINERNAMEACR }}
-        STORAGECONTAINERNAMEAKS: ${{ env.STORAGECONTAINERNAMEAKS }}
       with:
         azcliversion: 2.30.0
         inlineScript: |
