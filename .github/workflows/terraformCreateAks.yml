@@ -14,13 +14,10 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      RESOURCE_GROUP_NAME: ${{ env.RESOURCE_GROUP_NAME }}
-      LOCATION: ${{ env.LOCATION }}
-      CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      AGENT_COUNT: ${{ env.AZURE_AGENT_COUNT }}
-      DNS_PREFIX: ${{ env.DNS_PREFIX }}
-      CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+      RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP }}
+      LOCATION: ${{ vars.LOCATION }}
+      DNS_PREFIX: ${{ vars.AKS_NAME }}
+      CLUSTER_NAME: ${{ vars.AKS_NAME }}
     runs-on: ubuntu-latest
     environment: production
 
