@@ -11,18 +11,22 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   dns_prefix          = var.DNS_PREFIX
 
   default_node_pool {
-    name       = "node_reto"
+    name       = "nodereto"
     node_count = 1
     vm_size    = "Standard_D4ds_v5"
   }
 
   # service_principal {
-  #   client_id     = var.ARM_CLIENT_ID
-  #   client_secret = var.ARM_CLIENT_SECRET
+  #   client_id     = var.CLIENT_ID
+  #   client_secret = var.CLIENT_SECRET
   # }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   network_profile {
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "basic"
     network_plugin    = "kubenet"
   }
 
@@ -41,13 +45,13 @@ provider "kubernetes" {
 resource "kubernetes_namespace" "qa-reto" {
   depends_on = [azurerm_kubernetes_cluster.k8s]
   metadata {
-    name = "qa-#{namespace}#"
+    name = "qa-reto"
   }
 }
 
 resource "kubernetes_namespace" "pdn-reto" {
   depends_on = [azurerm_kubernetes_cluster.k8s]
   metadata {
-    name = "pdn-#{namespace}#"
+    name = "pdn-reto"
   }
 }
