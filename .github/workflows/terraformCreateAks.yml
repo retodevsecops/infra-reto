@@ -3,9 +3,6 @@ name: 'AKS Deployment'
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   aks:
     name: 'Terraform'
@@ -33,8 +30,11 @@ jobs:
 
     - name: Terraform Init
       working-directory: terraform/aks
-      run: terraform init
+      run: terraform init -reconfigure
     
+    - name: Terraform Plan
+      run: terraform plan
+
     - name: Terraform Apply
       working-directory: terraform/aks
       run: terraform apply -auto-approve -lock=false
