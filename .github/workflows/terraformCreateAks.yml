@@ -19,7 +19,6 @@ jobs:
       DNS_PREFIX: ${{ vars.AKS_NAME }}
       CLUSTER_NAME: ${{ vars.AKS_NAME }}
     runs-on: ubuntu-latest
-    environment: production
 
     defaults:
       run:
