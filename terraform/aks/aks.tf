@@ -14,7 +14,7 @@ terraform {
     resource_group_name  = "rg_reto_devsecops"
     storage_account_name = "saretodevsecops"
     container_name       = "scretodevsecopsaks"
-    key                  = "reto.terraform.tfstate"
+    key                  = "terraform.tfstate"
   }
 }
 

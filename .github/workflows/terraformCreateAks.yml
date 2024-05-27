@@ -34,14 +34,6 @@ jobs:
     - name: Terraform Init
       working-directory: terraform/aks
       run: terraform init
-           
-    - name: Terraform Format
-      working-directory: terraform/aks
-      run: terraform fmt
-
-    - name: Terraform Plan
-      working-directory: terraform/aks
-      run: terraform plan -lock=false
     
     - name: Terraform Apply
       working-directory: terraform/aks
