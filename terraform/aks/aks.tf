@@ -46,7 +46,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 }
 
 resource "azurerm_role_assignment" "example" {
-  principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+  principal_id                     = "4879f413-eafa-4997-880d-c484eefb705b"
   role_definition_name             = "AcrPull"
   scope                            = azurerm_container_registry.acr.id
   skip_service_principal_aad_check = true
