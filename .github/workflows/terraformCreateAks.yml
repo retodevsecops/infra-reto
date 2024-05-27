@@ -10,29 +10,21 @@ jobs:
   storageAndContainer:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-
     - name: Azure Login
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    # - name: Azure CLI script
-    #   uses: azure/cli@v2
-    #   with:
-    #     azcliversion: latest
-    #     inlineScript: |
-    #       az account show
-    #       az storage -h
+    - name: Checkout
+      uses: actions/checkout@v1
     
     - name: Azure CLI script file
       uses: azure/cli@v2
       env:
-        STORAGEACCOUNTNAME: ${{ vars.STORAGEACCOUNTNAME }}
-        RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
-        STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
-        STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
+        STORAGEACCOUNTNAME: ${{ env.STORAGEACCOUNTNAME }}
+        RESOURCEGROUP: ${{ env.RESOURCEGROUP }}
+        STORAGECONTAINERNAMEACR: ${{ env.STORAGECONTAINERNAMEACR }}
+        STORAGECONTAINERNAMEAKS: ${{ env.STORAGECONTAINERNAMEAKS }}
         LOCATION: eastus
       with:
         azcliversion: 2.30.0
