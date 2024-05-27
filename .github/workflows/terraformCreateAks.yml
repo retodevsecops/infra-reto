@@ -33,8 +33,9 @@ jobs:
       run: terraform init -reconfigure
     
     - name: Terraform Plan
+      working-directory: terraform/aks
       run: terraform plan
 
     - name: Terraform Apply
       working-directory: terraform/aks
-      run: terraform apply -auto-approve -lock=false
+      run: terraform apply -auto-approve

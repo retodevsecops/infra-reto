@@ -1,21 +1,7 @@
 
 provider "azurerm" {
   features {}
-}
-
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-    }
-  }
-
-  backend "azurerm" {
-    resource_group_name  = "rg_reto_devsecops"
-    storage_account_name = "saretodevsecops"
-    container_name       = "tfstate"
-    key                  = "terraform.tfstate"
-  }
+  skip_provider_registration = true
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
