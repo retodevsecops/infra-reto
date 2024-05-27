@@ -30,6 +30,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 }
 
+resource "azurerm_role_assignment" "example" {
+  principal_id                     = azurerm_kubernetes_cluster.example.kubelet_identity[0].object_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.example.id
+  skip_service_principal_aad_check = true
+}
+
 provider "kubernetes" {
   host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)

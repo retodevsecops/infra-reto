@@ -3,9 +3,47 @@ name: 'AKS Deployment'
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
+  acr:
+    name: 'Terraform ACR'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP }}
+      LOCATION: ${{ vars.LOCATION }}
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      working-directory: terraform/acr
+      run: terraform init -reconfigure
+    
+    - name: Terraform Plan
+      working-directory: terraform/acr
+      run: terraform plan
+
+    - name: Terraform Apply
+      working-directory: terraform/acr
+      run: terraform apply -auto-approve
+
   aks:
-    name: 'Terraform'
+    name: 'Terraform AKS'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -39,18 +77,3 @@ jobs:
     - name: Terraform Apply
       working-directory: terraform/aks
       run: terraform apply -auto-approve
-  
-  connectGhcrToAks:
-    name: 'Connect GHCR To Aks'
-		runs-on: ubuntu-latest
-		steps:
-		- uses: azure/login@v1
-			with:
-				client-id: ${{ secrets.AZURE_CLIENT_ID }}
-				tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-				subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-		
-		-	uses: azure/aks-set-context@v3
-			with:
-				resource-group: '${{ vars.RESOURCE_GROUP_NAME }}'
-				cluster-name: '${{ vars.AKS_NAME }}'
