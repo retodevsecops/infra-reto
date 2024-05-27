@@ -28,6 +28,17 @@ output "kube_config" {
 }
 
 output "host" {
-    value = nonsensitive(azurerm_kubernetes_cluster.k8s.kube_config.0.host)
-    
+    value = nonsensitive(azurerm_kubernetes_cluster.k8s.kube_config.0.host)  
+}
+
+output "login" {
+  value = nonsensitive(azurerm_container_registry.acr.login_server)
+}
+
+output "username" {
+  value = nonsensitive(azurerm_container_registry.acr.admin_username)
+}
+
+output "acr_id" {
+  value = nonsensitive(azurerm_container_registry.acr.id)
 }
