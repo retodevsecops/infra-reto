@@ -8,8 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  aks:
-    name: 'Terraform AKS'
+  terraformDeploy:
+    name: 'Terraform Deploy'
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
