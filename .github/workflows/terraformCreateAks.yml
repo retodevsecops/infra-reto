@@ -3,13 +3,6 @@ name: 'AKS Deployment'
 on:
   workflow_dispatch:
 
-env:
-  STORAGEACCOUNTNAME: ${{ vars.STORAGEACCOUNTNAME }}
-  RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
-  STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
-  STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
-  LOCATION: eastus
-
 permissions:
   contents: read
 
@@ -35,6 +28,12 @@ jobs:
     
     - name: Azure CLI script file
       uses: azure/cli@v2
+      env:
+        STORAGEACCOUNTNAME: ${{ vars.STORAGEACCOUNTNAME }}
+        RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
+        STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
+        STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
+        LOCATION: eastus
       with:
         azcliversion: 2.30.0
         inlineScript: |
