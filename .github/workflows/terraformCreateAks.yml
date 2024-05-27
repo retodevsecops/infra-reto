@@ -8,6 +8,7 @@ env:
   RESOURCEGROUP: ${{ vars.RESOURCEGROUP }}
   STORAGECONTAINERNAMEACR: ${{ vars.STORAGECONTAINERNAMEACR }}
   STORAGECONTAINERNAMEAKS: ${{ vars.STORAGECONTAINERNAMEAKS }}
+  LOCATION: eastus
 
 permissions:
   contents: read
@@ -16,21 +17,21 @@ jobs:
   storageAndContainer:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
     - name: Azure Login
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Checkout
-      uses: actions/checkout@v1
     
-    - name: Azure CLI script
-      uses: azure/cli@v2
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az account show
-          az storage -h
+    # - name: Azure CLI script
+    #   uses: azure/cli@v2
+    #   with:
+    #     azcliversion: latest
+    #     inlineScript: |
+    #       az account show
+    #       az storage -h
     
     - name: Azure CLI script file
       uses: azure/cli@v2
