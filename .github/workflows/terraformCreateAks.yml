@@ -39,3 +39,18 @@ jobs:
     - name: Terraform Apply
       working-directory: terraform/aks
       run: terraform apply -auto-approve
+  
+  connectGhcrToAks:
+    name: 'Connect GHCR To Aks'
+		runs-on: ubuntu-latest
+		steps:
+		- uses: azure/login@v1
+			with:
+				client-id: ${{ secrets.AZURE_CLIENT_ID }}
+				tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+				subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+		
+		-	uses: azure/aks-set-context@v3
+			with:
+				resource-group: '${{ vars.RESOURCE_GROUP_NAME }}'
+				cluster-name: '${{ vars.AKS_NAME }}'
