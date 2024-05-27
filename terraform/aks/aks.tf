@@ -12,8 +12,8 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "rg_reto_devsecops"
-    storage_account_name = "sa_reto_devsecops"
-    container_name       = "sc_reto_devsecops_aks"
+    storage_account_name = "saretodevsecops"
+    container_name       = "scretodevsecopsaks"
     key                  = "reto.terraform.tfstate"
   }
 }
