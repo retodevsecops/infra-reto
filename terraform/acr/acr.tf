@@ -11,17 +11,17 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "rg_reto_devsecops"
-    storage_account_name = "sa_reto_devsecops"
-    container_name       = "sc_reto_devsecops_acr"
+    storage_account_name = "saretodevsecops"
+    container_name       = "scretodevsecopsacr"
     key                  = "reto.terraform.tfstate"
   }
 }
 
 # Resource container registry
 resource "azurerm_container_registry" "acr" {
-  name                = var.acr_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  name                = var.ACR_NAME
+  resource_group_name = var.RESOURCE_GROUP_NAME
+  location            = var.LOCATION
   sku                 = "Basic"
   admin_enabled       = true
 }
