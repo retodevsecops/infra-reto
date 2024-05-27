@@ -13,9 +13,9 @@ variable "LOCATION" {
 # }
 
 variable "DNS_PREFIX" {
-default = "aks_reto_devsecops"
+default = "aksreto"
 }
 
 variable "CLUSTER_NAME" {
-  default = "aks_reto_devsecops"
+  default = "aksreto"
 }
