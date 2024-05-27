@@ -19,3 +19,7 @@ default = "aksreto"
 variable "CLUSTER_NAME" {
   default = "aksreto"
 }
+
+variable "ACR_NAME" {
+	default = "acrreto"
+}

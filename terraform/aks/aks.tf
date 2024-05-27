@@ -4,6 +4,21 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
+resource "azurerm_container_registry" "acr" {
+  name                = var.ACR_NAME
+  resource_group_name = var.RESOURCE_GROUP_NAME
+  location            = var.LOCATION
+  sku                 = "Basic"
+  admin_enabled       = true
+
+  # identity {
+  #   type = "UserAssigned"
+  #   identity_ids = [
+  #     azurerm_user_assigned_identity.acr.id
+  #   ]
+  # }
+}
+
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = var.CLUSTER_NAME
   location            = var.LOCATION
@@ -31,9 +46,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 }
 
 resource "azurerm_role_assignment" "example" {
-  principal_id                     = azurerm_kubernetes_cluster.example.kubelet_identity[0].object_id
+  principal_id                     = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
-  scope                            = azurerm_container_registry.example.id
+  scope                            = azurerm_container_registry.acr.id
   skip_service_principal_aad_check = true
 }
 
