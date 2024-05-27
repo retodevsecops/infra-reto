@@ -6,11 +6,11 @@ variable "LOCATION" {
   default = "eastus"
 }
 
-variable "ARM_CLIENT_ID" {
-}
+# variable "ARM_CLIENT_ID" {
+# }
 
-variable "ARM_CLIENT_SECRET" {
-}
+# variable "ARM_CLIENT_SECRET" {
+# }
 
 variable "DNS_PREFIX" {
 default = "aks_reto_devsecops"

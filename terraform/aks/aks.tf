@@ -16,10 +16,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     vm_size    = "Standard_D4ds_v5"
   }
 
-  service_principal {
-    client_id     = var.ARM_CLIENT_ID
-    client_secret = var.ARM_CLIENT_SECRET
-  }
+  # service_principal {
+  #   client_id     = var.ARM_CLIENT_ID
+  #   client_secret = var.ARM_CLIENT_SECRET
+  # }
 
   network_profile {
     load_balancer_sku = "Standard"
