@@ -8,40 +8,6 @@ permissions:
   contents: read
 
 jobs:
-  # acr:
-  #   name: 'Terraform ACR'
-  #   env:
-  #     ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
-  #     ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  #     RESOURCE_GROUP_NAME: ${{ vars.RESOURCE_GROUP }}
-  #     LOCATION: ${{ vars.LOCATION }}
-  #   runs-on: ubuntu-latest
-
-  #   defaults:
-  #     run:
-  #       shell: bash
-
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v4
-
-  #   - name: Setup Terraform
-  #     uses: hashicorp/setup-terraform@v3
-
-  #   - name: Terraform Init
-  #     working-directory: terraform/acr
-  #     run: terraform init -reconfigure
-    
-  #   - name: Terraform Plan
-  #     working-directory: terraform/acr
-  #     run: terraform plan
-
-  #   - name: Terraform Apply
-  #     working-directory: terraform/acr
-  #     run: terraform apply -auto-approve
-
   aks:
     name: 'Terraform AKS'
     env:
@@ -67,13 +33,13 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      working-directory: terraform/aks
+      working-directory: terraform
       run: terraform init -reconfigure
     
     - name: Terraform Plan
-      working-directory: terraform/aks
+      working-directory: terraform
       run: terraform plan
 
     - name: Terraform Apply
-      working-directory: terraform/aks
+      working-directory: terraform
       run: terraform apply -auto-approve
