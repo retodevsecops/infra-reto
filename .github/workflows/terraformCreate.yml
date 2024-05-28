@@ -1,4 +1,4 @@
-name: 'AKS Deployment'
+name: 'Terraform Deployment'
 
 on:
   workflow_dispatch:
